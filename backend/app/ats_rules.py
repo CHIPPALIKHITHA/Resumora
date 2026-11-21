@@ -21,3 +21,12 @@ def check_contact(r: Resume) -> list[Issue]:
     if not r.github:
         issues.append(Issue(section='contact', message='Add a GitHub URL (important for tech roles).'))
     return issues
+
+
+def check_summary(r: Resume) -> list[Issue]:
+    if not r.summary:
+        return [Issue(section='summary', message='Add a 2-3 line professional summary.', penalty=5)]
+    words = len(r.summary.split())
+    if words < 20 or words > 70:
+        return [Issue(section='summary', message='Keep the summary between 20 and 70 words.')]
+    return []

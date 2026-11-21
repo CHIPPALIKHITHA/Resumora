@@ -70,3 +70,22 @@ def skills_section(r: Resume):
     if not r.skills:
         return []
     return [*_section_heading('Skills'), _p(', '.join(r.skills), S.BODY)]
+
+
+def build_pdf(r: Resume) -> bytes:
+    buf = BytesIO()
+    doc = SimpleDocTemplate(
+        buf,
+        pagesize=A4,
+        leftMargin=18 * mm,
+        rightMargin=18 * mm,
+        topMargin=15 * mm,
+        bottomMargin=15 * mm,
+        title=f'{r.name} - Resume',
+        author=r.name,
+    )
+    story = []
+    for part in (header, summary_section, education_section, experience_section, projects_section, skills_section):
+        story.extend(part(r))
+    doc.build(story)
+    return buf.getvalue()

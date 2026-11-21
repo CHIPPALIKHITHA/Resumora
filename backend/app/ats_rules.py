@@ -63,3 +63,12 @@ def check_metrics(r: Resume) -> list[Issue]:
         if not re.search(r'\d', b):
             issues.append(Issue(section=where, message=f"Add a number or metric (%, count, time): '{b[:50]}'", penalty=2))
     return issues
+
+
+def check_bullet_length(r: Resume) -> list[Issue]:
+    issues = []
+    for where, b in _all_bullets(r):
+        n = len(b.split())
+        if n < 6 or n > 30:
+            issues.append(Issue(section=where, message=f'Keep bullets between 6 and 30 words (this one has {n}).', penalty=1))
+    return issues

@@ -28,3 +28,9 @@ def header(r: Resume):
     if r.github:
         parts.append(r.github)
     return [_p(r.name, S.NAME), _p(' | '.join(parts), S.CONTACT)]
+
+
+def summary_section(r: Resume):
+    if not r.summary:
+        return []
+    return [*_section_heading('Summary'), _p(r.summary, S.BODY)]

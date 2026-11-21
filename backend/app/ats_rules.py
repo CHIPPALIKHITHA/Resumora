@@ -72,3 +72,9 @@ def check_bullet_length(r: Resume) -> list[Issue]:
         if n < 6 or n > 30:
             issues.append(Issue(section=where, message=f'Keep bullets between 6 and 30 words (this one has {n}).', penalty=1))
     return issues
+
+
+def check_skills(r: Resume) -> list[Issue]:
+    if len(r.skills) < 5:
+        return [Issue(section='skills', message='List at least 5 relevant skills.', penalty=5)]
+    return []

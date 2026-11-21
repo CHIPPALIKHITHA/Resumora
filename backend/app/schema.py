@@ -31,3 +31,16 @@ class Project(BaseModel):
     tech: list[str] = []
     bullets: list[str] = []
     link: Optional[str] = None
+
+
+class Resume(BaseModel):
+    name: str
+    email: EmailStr
+    phone: str
+    linkedin: Optional[str] = None
+    github: Optional[str] = None
+    summary: Optional[str] = None
+    education: list[Education] = []
+    experience: list[Experience] = []
+    projects: list[Project] = []
+    skills: list[str] = []

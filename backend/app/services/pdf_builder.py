@@ -34,3 +34,17 @@ def summary_section(r: Resume):
     if not r.summary:
         return []
     return [*_section_heading('Summary'), _p(r.summary, S.BODY)]
+
+
+def education_section(r: Resume):
+    if not r.education:
+        return []
+    out = list(_section_heading('Education'))
+    for e in r.education:
+        out.append(_p(f'{e.degree}, {e.institution}', S.BOLD))
+        detail = f'{e.start} - {e.end}'
+        if e.cgpa:
+            detail += f' | CGPA: {e.cgpa}'
+        out.append(_p(detail, S.BODY))
+        out.append(Spacer(1, 3))
+    return out

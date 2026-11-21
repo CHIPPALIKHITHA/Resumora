@@ -89,3 +89,19 @@ def build_pdf(r: Resume) -> bytes:
         story.extend(part(r))
     doc.build(story)
     return buf.getvalue()
+
+
+def _bullets(items):
+    return [Paragraph(escape(b), S.BULLET, bulletText='\u2022') for b in items]
+
+
+def experience_section(r: Resume):
+    if not r.experience:
+        return []
+    out = list(_section_heading('Experience'))
+    for e in r.experience:
+        out.append(_p(f'{e.role}, {e.company}', S.BOLD))
+        out.append(_p(f'{e.start} - {e.end}', S.BODY))
+        out.extend(_bullets(e.bullets))
+        out.append(Spacer(1, 3))
+    return out

@@ -17,3 +17,10 @@ class Experience(BaseModel):
     start: str
     end: str
     bullets: list[str] = []
+
+
+class Project(BaseModel):
+    name: str
+    tech: list[str] = []
+    bullets: list[str] = []
+    link: Optional[str] = None

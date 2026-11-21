@@ -46,3 +46,18 @@ def header(doc, r: Resume):
     c = doc.add_paragraph()
     c.alignment = WD_ALIGN_PARAGRAPH.CENTER
     _run(c, ' | '.join(parts), size=9.5)
+
+
+def _heading(doc, title: str):
+    p = doc.add_paragraph()
+    pPr = p._p.get_or_add_pPr()
+    borders = OxmlElement('w:pBdr')
+    bottom = OxmlElement('w:bottom')
+    for key, value in (('w:val', 'single'), ('w:sz', '6'), ('w:space', '1'), ('w:color', '000000')):
+        bottom.set(qn(key), value)
+    borders.append(bottom)
+    pPr.append(borders)
+    p.paragraph_format.space_before = Pt(8)
+    p.paragraph_format.space_after = Pt(3)
+    p.paragraph_format.keep_with_next = True
+    _run(p, title.upper(), bold=True, size=11)

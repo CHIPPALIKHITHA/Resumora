@@ -119,3 +119,14 @@ def skills_section(doc, r: Resume):
         return
     _heading(doc, 'Skills')
     doc.add_paragraph(', '.join(r.skills))
+
+
+def build_docx(r: Resume) -> bytes:
+    doc = _new_document()
+    for part in (header, summary_section, education_section, experience_section, projects_section, skills_section):
+        part(doc, r)
+    doc.core_properties.title = f'{r.name} - Resume'
+    doc.core_properties.author = r.name
+    buf = BytesIO()
+    doc.save(buf)
+    return buf.getvalue()

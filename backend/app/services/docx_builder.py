@@ -97,3 +97,18 @@ def experience_section(doc, r: Resume):
         _run(p, f'{e.role}, {e.company}', bold=True)
         doc.add_paragraph(f'{e.start} - {e.end}')
         _bullets(doc, e.bullets)
+
+
+def projects_section(doc, r: Resume):
+    if not r.projects:
+        return
+    _heading(doc, 'Projects')
+    for pr in r.projects:
+        title = pr.name
+        if pr.tech:
+            title += ' | ' + ', '.join(pr.tech)
+        p = doc.add_paragraph()
+        _run(p, title, bold=True)
+        _bullets(doc, pr.bullets)
+        if pr.link:
+            doc.add_paragraph(pr.link)

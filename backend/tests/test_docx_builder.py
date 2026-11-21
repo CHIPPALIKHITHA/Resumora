@@ -13,3 +13,8 @@ def _read(data: bytes) -> Document:
 def test_build_docx_contains_name(good_resume):
     doc = _read(build_docx(good_resume))
     assert any(good_resume.name in p.text for p in doc.paragraphs)
+
+
+def test_docx_has_no_tables(good_resume):
+    doc = _read(build_docx(good_resume))
+    assert len(doc.tables) == 0

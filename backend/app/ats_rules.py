@@ -87,3 +87,22 @@ def check_sections(r: Resume) -> list[Issue]:
     if not r.experience and not r.projects:
         issues.append(Issue(section='experience', message='Add at least one project or experience.', penalty=10))
     return issues
+
+
+RULES = [
+    check_contact, check_summary, check_action_verbs, check_metrics,
+    check_bullet_length, check_skills, check_sections,
+]
+
+
+class AnalysisResult(BaseModel):
+    score: int
+    issues: list[Issue]
+
+
+def analyze(r: Resume) -> AnalysisResult:
+    issues: list[Issue] = []
+    for rule in RULES:
+        issues.extend(rule(r))
+    score = max(0, 100 - sum(i.penalty for i in issues))
+    return AnalysisResult(score=score, issues=issues)

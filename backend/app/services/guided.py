@@ -50,3 +50,21 @@ def apply_answer(d: ResumeDraft, field: str, text: str):
             bullets=[b.strip() for b in parts[2].split(';') if b.strip()],
         ))
     return None
+
+
+def next_question(d: ResumeDraft) -> str:
+    missing = missing_fields(d)
+    if not missing:
+        return 'Your resume is ready! You can download it or run the ATS check.'
+    return QUESTIONS[missing[0]]
+
+
+def guided_turn(d: ResumeDraft, user_text):
+    """Apply the user's latest answer (if any) and return the next reply."""
+    if user_text is not None:
+        missing = missing_fields(d)
+        if missing:
+            error = apply_answer(d, missing[0], user_text)
+            if error:
+                return error
+    return next_question(d)

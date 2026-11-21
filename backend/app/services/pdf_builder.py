@@ -121,3 +121,9 @@ def projects_section(r: Resume):
             out.append(_p(p.link, S.BODY))
         out.append(Spacer(1, 3))
     return out
+
+
+def skills_section(r: Resume):
+    if not r.skills:
+        return []
+    return [*_section_heading('Skills'), _p(', '.join(r.skills), S.BODY)]

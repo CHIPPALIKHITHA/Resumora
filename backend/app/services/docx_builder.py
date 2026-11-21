@@ -32,3 +32,17 @@ def _run(paragraph, text, bold=False, size=None):
     if size:
         run.font.size = Pt(size)
     return run
+
+
+def header(doc, r: Resume):
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    _run(p, r.name, bold=True, size=18)
+    parts = [r.email, r.phone]
+    if r.linkedin:
+        parts.append(r.linkedin)
+    if r.github:
+        parts.append(r.github)
+    c = doc.add_paragraph()
+    c.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    _run(c, ' | '.join(parts), size=9.5)

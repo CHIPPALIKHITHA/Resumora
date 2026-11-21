@@ -112,3 +112,10 @@ def projects_section(doc, r: Resume):
         _bullets(doc, pr.bullets)
         if pr.link:
             doc.add_paragraph(pr.link)
+
+
+def skills_section(doc, r: Resume):
+    if not r.skills:
+        return
+    _heading(doc, 'Skills')
+    doc.add_paragraph(', '.join(r.skills))

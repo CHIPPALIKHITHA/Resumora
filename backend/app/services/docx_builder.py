@@ -81,3 +81,19 @@ def education_section(doc, r: Resume):
         if e.cgpa:
             detail += f' | CGPA: {e.cgpa}'
         doc.add_paragraph(detail)
+
+
+def _bullets(doc, items):
+    for b in items:
+        doc.add_paragraph(b, style='List Bullet')
+
+
+def experience_section(doc, r: Resume):
+    if not r.experience:
+        return
+    _heading(doc, 'Experience')
+    for e in r.experience:
+        p = doc.add_paragraph()
+        _run(p, f'{e.role}, {e.company}', bold=True)
+        doc.add_paragraph(f'{e.start} - {e.end}')
+        _bullets(doc, e.bullets)

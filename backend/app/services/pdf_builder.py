@@ -105,3 +105,19 @@ def experience_section(r: Resume):
         out.extend(_bullets(e.bullets))
         out.append(Spacer(1, 3))
     return out
+
+
+def projects_section(r: Resume):
+    if not r.projects:
+        return []
+    out = list(_section_heading('Projects'))
+    for p in r.projects:
+        title = p.name
+        if p.tech:
+            title += ' | ' + ', '.join(p.tech)
+        out.append(_p(title, S.BOLD))
+        out.extend(_bullets(p.bullets))
+        if p.link:
+            out.append(_p(p.link, S.BODY))
+        out.append(Spacer(1, 3))
+    return out

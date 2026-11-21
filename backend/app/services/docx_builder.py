@@ -61,3 +61,10 @@ def _heading(doc, title: str):
     p.paragraph_format.space_after = Pt(3)
     p.paragraph_format.keep_with_next = True
     _run(p, title.upper(), bold=True, size=11)
+
+
+def summary_section(doc, r: Resume):
+    if not r.summary:
+        return
+    _heading(doc, 'Summary')
+    doc.add_paragraph(r.summary)

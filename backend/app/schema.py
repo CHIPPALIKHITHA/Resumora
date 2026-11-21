@@ -24,3 +24,10 @@ class Project(BaseModel):
     tech: list[str] = []
     bullets: list[str] = []
     link: Optional[str] = None
+
+
+class Project(BaseModel):
+    name: str
+    tech: list[str] = []
+    bullets: list[str] = []
+    link: Optional[str] = None

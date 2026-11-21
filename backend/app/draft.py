@@ -23,3 +23,19 @@ class ResumeDraft(BaseModel):
         data = self.model_dump()
         data['summary'] = data['summary'] or None
         return Resume(**data)
+
+
+def missing_fields(d: ResumeDraft) -> list[str]:
+    missing = []
+    for key in ('name', 'email', 'phone'):
+        if not getattr(d, key):
+            missing.append(key)
+    if not d.education:
+        missing.append('education')
+    if not d.skills:
+        missing.append('skills')
+    if not d.projects and not d.experience:
+        missing.append('projects')
+    if d.summary is None:
+        missing.append('summary')
+    return missing

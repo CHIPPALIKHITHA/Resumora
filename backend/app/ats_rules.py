@@ -55,3 +55,11 @@ def check_action_verbs(r: Resume) -> list[Issue]:
         if words and words[0].lower().strip(',.:;') not in ACTION_VERBS:
             issues.append(Issue(section=where, message=f"Start with a strong action verb: '{b[:50]}'", penalty=2))
     return issues
+
+
+def check_metrics(r: Resume) -> list[Issue]:
+    issues = []
+    for where, b in _all_bullets(r):
+        if not re.search(r'\d', b):
+            issues.append(Issue(section=where, message=f"Add a number or metric (%, count, time): '{b[:50]}'", penalty=2))
+    return issues

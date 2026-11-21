@@ -30,3 +30,28 @@ def check_summary(r: Resume) -> list[Issue]:
     if words < 20 or words > 70:
         return [Issue(section='summary', message='Keep the summary between 20 and 70 words.')]
     return []
+
+
+ACTION_VERBS = {
+    'built', 'developed', 'designed', 'led', 'optimized', 'implemented', 'created',
+    'automated', 'reduced', 'improved', 'deployed', 'engineered', 'analyzed',
+    'integrated', 'launched', 'managed', 'migrated', 'wrote', 'architected', 'delivered',
+}
+
+
+def _all_bullets(r: Resume):
+    for e in r.experience:
+        for b in e.bullets:
+            yield e.role, b
+    for p in r.projects:
+        for b in p.bullets:
+            yield p.name, b
+
+
+def check_action_verbs(r: Resume) -> list[Issue]:
+    issues = []
+    for where, b in _all_bullets(r):
+        words = b.split()
+        if words and words[0].lower().strip(',.:;') not in ACTION_VERBS:
+            issues.append(Issue(section=where, message=f"Start with a strong action verb: '{b[:50]}'", penalty=2))
+    return issues

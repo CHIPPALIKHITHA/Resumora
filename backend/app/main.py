@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import analyze, export
+from app.routes import analyze, chat, export
 
 app = FastAPI(title='Resumora')
 
@@ -14,6 +14,7 @@ app.add_middleware(
 
 app.include_router(analyze.router)
 app.include_router(export.router)
+app.include_router(chat.router)
 
 
 @app.get('/health')

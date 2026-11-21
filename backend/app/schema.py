@@ -9,3 +9,11 @@ class Education(BaseModel):
     start: str
     end: str
     cgpa: Optional[str] = None
+
+
+class Experience(BaseModel):
+    role: str
+    company: str
+    start: str
+    end: str
+    bullets: list[str] = []

@@ -68,3 +68,16 @@ def summary_section(doc, r: Resume):
         return
     _heading(doc, 'Summary')
     doc.add_paragraph(r.summary)
+
+
+def education_section(doc, r: Resume):
+    if not r.education:
+        return
+    _heading(doc, 'Education')
+    for e in r.education:
+        p = doc.add_paragraph()
+        _run(p, f'{e.degree}, {e.institution}', bold=True)
+        detail = f'{e.start} - {e.end}'
+        if e.cgpa:
+            detail += f' | CGPA: {e.cgpa}'
+        doc.add_paragraph(detail)

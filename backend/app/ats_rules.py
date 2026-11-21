@@ -78,3 +78,12 @@ def check_skills(r: Resume) -> list[Issue]:
     if len(r.skills) < 5:
         return [Issue(section='skills', message='List at least 5 relevant skills.', penalty=5)]
     return []
+
+
+def check_sections(r: Resume) -> list[Issue]:
+    issues = []
+    if not r.education:
+        issues.append(Issue(section='education', message='Add your education.', penalty=10))
+    if not r.experience and not r.projects:
+        issues.append(Issue(section='experience', message='Add at least one project or experience.', penalty=10))
+    return issues
